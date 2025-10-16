@@ -20,6 +20,13 @@ StudyMune is a Next.js application that provides an all-in-one platform for acad
 - **Question Generator Enhancement**: Upgraded Question Generator to accept file uploads (txt, md, doc, docx, pdf)
 - **Question Types**: Added support for multiple question types (MCQ, True/False, Short Answer, Essay, Mixed)
 - **Smart Question Count**: Automatic suggestion of question count based on file/text size (1 question per ~100 words)
+- **Universal File Support**: Added comprehensive file reading support across all tools
+  - PDF extraction using pdfjs-dist
+  - Word (.docx) extraction using mammoth
+  - Image OCR using tesseract.js (Arabic + English)
+  - Text files (.txt, .md) support
+  - Enhanced error handling with user-friendly messages
+  - Applied to Question Generator and AI Detector tools
 
 ## Technology Stack
 - **Framework**: Next.js 15.3.3 with Turbopack
