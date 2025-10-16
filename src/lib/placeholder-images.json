@@ -1,0 +1,64 @@
+{
+  "placeholderImages": [
+    {
+      "id": "document-tools",
+      "description": "A friendly image showing a person working on documents.",
+      "imageUrl": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzdHVkZW50cyUyMGNvbGxhYm9yYXRpb258ZW58MHx8fHwxNzU4Nzk3MjQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "students collaboration"
+    },
+    {
+      "id": "study-tools",
+      "description": "A group of students studying together in a library.",
+      "imageUrl": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdHVkZW50cyUyMHN0dWR5aW5nfGVufDB8fHx8MTc1ODc5NzI0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "students studying"
+    },
+    {
+      "id": "video-audio-tools",
+      "description": "A student wearing headphones and working on a laptop, representing audio/video tasks.",
+      "imageUrl": "https://images.unsplash.com/photo-1576778119293-b6399a7522bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzdHVkZW50JTIwd2l0aCUyMGhlYWRwaG9uZXN8ZW58MHx8fHwxNzU4Nzk3MjQ0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "student headphones"
+    },
+    {
+      "id": "presentation-tools",
+      "description": "Students collaborating on a presentation.",
+      "imageUrl": "https://images.unsplash.com/photo-1556761175-b413da4baf72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdHVkZW50cyUyMHByZXNlbnRhdGlvbnxlbnwwfHx8fDE3NTg3OTcyNDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "students presentation"
+    },
+    {
+      "id": "language-tools",
+      "description": "A diverse group of students talking, representing language and communication.",
+      "imageUrl": "https://images.unsplash.com/photo-1531545514256-b1400bc00f31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwc3R1ZGVudHMlMjB0YWxraW5nfGVufDB8fHx8MTc1ODc5NzI0NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "students talking"
+    },
+    {
+      "id": "productivity-tools",
+      "description": "A student organizing tasks on a board, showing productivity.",
+      "imageUrl": "https://images.unsplash.com/photo-1542744095-291d1f67b221?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwcGxhbm5pbmd8ZW58MHx8fHwxNzU4Nzk3MjQ0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "student planning"
+    },
+    {
+      "id": "timer-calm-city",
+      "description": "A calm cityscape at dusk for focus.",
+      "imageUrl": "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "city dusk"
+    },
+    {
+      "id": "timer-rainy-day",
+      "description": "A cozy view of a city street on a rainy day.",
+      "imageUrl": "https://images.unsplash.com/photo-1519618768095-5553f1a43a69?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "rainy window"
+    },
+    {
+      "id": "timer-cherry-blossom",
+      "description": "Beautiful cherry blossoms for a girly and pink theme.",
+      "imageUrl": "https://images.unsplash.com/photo-1522383225653-ed11118ca252?q=80&w=2148&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "cherry blossom"
+    },
+    {
+      "id": "timer-peaceful-ocean",
+      "description": "A peaceful ocean view for a calm and relaxing theme.",
+      "imageUrl": "https://images.unsplash.com/photo-1507525428034-b723a996fde1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "ocean beach"
+    }
+  ]
+}
