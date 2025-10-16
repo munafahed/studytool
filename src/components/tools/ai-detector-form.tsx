@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { detectAiContent } from '@/ai/flows/ai-detector';
+import { extractTextFromFile } from '@/lib/file-text-extractor';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,19 +19,23 @@ export default function AiDetectorForm() {
   const [error, setError] = useState("");
   const { toast } = useToast();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const fileText = e.target?.result as string;
+      setIsLoading(true);
+      try {
+        toast({ title: "Reading file...", description: "Please wait while we extract text from the file."});
+        const fileText = await extractTextFromFile(file);
         setText(fileText);
-        toast({ title: "File loaded", description: `${file.name} content has been loaded into the text area.`});
-      };
-      reader.onerror = () => {
-        setError("Failed to read the file.");
+        toast({ title: "File loaded successfully!", description: `${file.name} content has been loaded into the text area.`});
+      } catch (error) {
+        console.error('Error reading file:', error);
+        const errorMessage = error instanceof Error ? error.message : "Failed to read the file.";
+        setError(errorMessage);
+        toast({ title: "Error", description: errorMessage, variant: "destructive" });
+      } finally {
+        setIsLoading(false);
       }
-      reader.readAsText(file);
     }
   };
 
@@ -88,7 +93,7 @@ export default function AiDetectorForm() {
                 id="file-upload"
                 className="sr-only"
                 onChange={handleFileChange}
-                accept=".txt,.md,.doc,.docx"
+                accept=".txt,.md,.docx,.pdf,image/*"
                 disabled={isLoading}
               />
               <Button asChild variant="link">

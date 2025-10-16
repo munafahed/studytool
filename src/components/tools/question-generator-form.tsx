@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent } from 'react';
 import { generateQuestions } from '@/ai/flows/question-generation';
+import { extractTextFromFile } from '@/lib/file-text-extractor';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,25 +29,37 @@ export default function QuestionGeneratorForm() {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
+      setIsLoading(true);
       
       try {
-        const fileText = await selectedFile.text();
+        toast({
+          title: "جاري قراءة الملف...",
+          description: "الرجاء الانتظار، يتم استخراج النص من الملف.",
+        });
+
+        const fileText = await extractTextFromFile(selectedFile);
         setText(fileText);
         
-        const wordCount = fileText.split(/\s+/).length;
+        const wordCount = fileText.split(/\s+/).filter(word => word.length > 0).length;
         const suggestedQuestions = Math.max(3, Math.min(20, Math.floor(wordCount / 100)));
         setNumQuestions(suggestedQuestions);
         
         toast({
-          title: "تم رفع الملف!",
-          description: `نقترح ${suggestedQuestions} أسئلة بناءً على حجم الملف (${wordCount} كلمة).`,
+          title: "تم رفع الملف بنجاح! ✓",
+          description: `تم استخراج النص من الملف. نقترح ${suggestedQuestions} أسئلة بناءً على حجم الملف (${wordCount} كلمة).`,
         });
       } catch (error) {
+        console.error('Error reading file:', error);
+        const errorMessage = error instanceof Error ? error.message : "تأكد من أن الملف بصيغة مدعومة.";
         toast({
           title: "خطأ في قراءة الملف",
-          description: "تأكد من أن الملف بصيغة نصية صحيحة.",
+          description: errorMessage,
           variant: "destructive"
         });
+        setFile(null);
+        setText('');
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -125,7 +138,7 @@ export default function QuestionGeneratorForm() {
                 <Input
                   id="file-upload"
                   type="file"
-                  accept=".txt,.md,.doc,.docx,.pdf"
+                  accept=".txt,.md,.docx,.pdf,image/*"
                   onChange={handleFileChange}
                   disabled={isLoading}
                   className="cursor-pointer"
