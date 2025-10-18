@@ -593,16 +593,20 @@ export default function TimerPage() {
   };
 
   const circleStrokeColor = currentTheme.isLight 
-    ? 'rgba(0,0,0,0.15)' 
+    ? 'rgba(0,0,0,0.2)' 
     : 'rgba(255,255,255,0.2)';
   
   const circleProgressColor = currentTheme.isLight 
-    ? 'rgba(0,0,0,0.5)' 
+    ? 'rgba(0,0,0,0.7)' 
     : 'rgba(255,255,255,0.8)';
 
   const timerBackgroundColor = currentTheme.isLight
-    ? 'bg-white/40'
+    ? 'bg-white/70'
     : 'bg-white/10';
+    
+  const timerNumberColor = currentTheme.isLight
+    ? 'text-gray-900'
+    : currentTheme.accentColor;
 
   return (
     <div className={cn("relative w-full transition-all duration-500", isFullScreen ? 'fixed inset-0 z-50' : 'min-h-screen')}>
@@ -821,16 +825,16 @@ export default function TimerPage() {
                 </svg>
                 
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className={cn("text-center backdrop-blur-xl rounded-full p-12", timerBackgroundColor, currentTheme.textColor)}>
+                  <div className={cn("text-center backdrop-blur-xl rounded-full p-12", timerBackgroundColor)}>
                     <motion.div
                       key={seconds}
                       initial={{ scale: 1.1, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className={cn("text-6xl md:text-7xl font-bold tabular-nums", currentTheme.accentColor)}
+                      className={cn("text-6xl md:text-7xl font-bold tabular-nums", timerNumberColor)}
                     >
                       {formatTime(seconds)}
                     </motion.div>
-                    <div className="text-sm md:text-base mt-2 opacity-70">
+                    <div className={cn("text-sm md:text-base mt-2 opacity-70", currentTheme.isLight ? 'text-gray-800' : currentTheme.textColor)}>
                       {mode === 'pomodoro' ? '⏱️ Study Time' : mode === 'shortBreak' ? '☕ Short Break' : '🌴 Long Break'}
                     </div>
                   </div>
