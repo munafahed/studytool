@@ -17,8 +17,15 @@ const GenerateQuestionsInputSchema = z.object({
 });
 export type GenerateQuestionsInput = z.infer<typeof GenerateQuestionsInputSchema>;
 
+const QuestionItemSchema = z.object({
+  question: z.string().describe('The question text.'),
+  options: z.array(z.string()).optional().describe('Options for MCQ or True/False questions (A, B, C, D or True, False).'),
+  answer: z.string().describe('The correct answer.'),
+  type: z.enum(['mcq', 'true_false', 'short_answer', 'essay']).describe('The type of the question.'),
+});
+
 const GenerateQuestionsOutputSchema = z.object({
-  questions: z.array(z.string()).describe('An array of generated questions.'),
+  questions: z.array(QuestionItemSchema).describe('An array of generated questions with their answers.'),
 });
 export type GenerateQuestionsOutput = z.infer<typeof GenerateQuestionsOutputSchema>;
 
@@ -36,19 +43,25 @@ const prompt = ai.definePrompt({
 
 Based on the provided text, generate {{numQuestions}} questions of the type "{{questionType}}".
 
-Question Types:
-- mcq: Multiple choice questions (provide 4 options labeled A, B, C, D)
-- true_false: True or False questions
-- short_answer: Questions requiring brief answers (1-2 sentences)
-- essay: Questions requiring detailed answers
+Question Types and Format:
+- mcq: Multiple choice questions with 4 options (A, B, C, D). Provide the question, all 4 options, and the correct answer.
+- true_false: True or False questions. Provide the question, two options ["True", "False"], and the correct answer.
+- short_answer: Questions requiring brief answers (1-2 sentences). Provide the question and the correct answer.
+- essay: Questions requiring detailed answers. Provide the question and key points for the answer.
 - mixed: A mix of different question types
+
+IMPORTANT INSTRUCTIONS:
+- For MCQ: Always provide exactly 4 options in the "options" array
+- For True/False: Always provide exactly 2 options ["True", "False"] in the "options" array
+- For all question types: Always include the correct "answer" field
+- The "answer" should be the correct option letter (A/B/C/D) for MCQ, "True" or "False" for true_false, or the actual answer text for short_answer and essay questions
 
 Input Text:
 ---
 {{{text}}}
 ---
 
-Generate the questions now:`,
+Generate the questions now in the structured format:`,
 });
 
 const generateQuestionsFlow = ai.defineFlow(

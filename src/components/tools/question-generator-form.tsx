@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent } from 'react';
 import { generateQuestions } from '@/ai/flows/question-generation';
+import type { GenerateQuestionsOutput } from '@/ai/flows/question-generation';
 import { extractTextFromFile } from '@/lib/file-text-extractor';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -11,8 +12,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Loader2, AlertCircle, Copy, HelpCircle, FileText, Upload } from "lucide-react";
+import { Loader2, AlertCircle, Copy, HelpCircle, FileText, Upload, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+type QuestionItem = {
+  question: string;
+  options?: string[];
+  answer: string;
+  type: 'mcq' | 'true_false' | 'short_answer' | 'essay';
+};
 
 export default function QuestionGeneratorForm() {
   const [inputMode, setInputMode] = useState<'text' | 'file'>('text');
@@ -21,7 +29,8 @@ export default function QuestionGeneratorForm() {
   const [questionType, setQuestionType] = useState<string>('mixed');
   const [numQuestions, setNumQuestions] = useState<number>(5);
   const [isLoading, setIsLoading] = useState(false);
-  const [questions, setQuestions] = useState<string[]>([]);
+  const [questions, setQuestions] = useState<QuestionItem[]>([]);
+  const [visibleAnswers, setVisibleAnswers] = useState<Set<number>>(new Set());
   const [error, setError] = useState("");
   const { toast } = useToast();
 
@@ -74,6 +83,7 @@ export default function QuestionGeneratorForm() {
     setIsLoading(true);
     setError("");
     setQuestions([]);
+    setVisibleAnswers(new Set());
 
     try {
       const result = await generateQuestions({ 
@@ -94,13 +104,43 @@ export default function QuestionGeneratorForm() {
     }
   };
 
+  const toggleAnswer = (index: number) => {
+    setVisibleAnswers(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleAllAnswers = () => {
+    if (visibleAnswers.size === questions.length) {
+      setVisibleAnswers(new Set());
+    } else {
+      setVisibleAnswers(new Set(questions.map((_, i) => i)));
+    }
+  };
+
   const handleCopy = () => {
     if (questions.length > 0) {
-      const questionsText = questions.join('\n\n');
+      const questionsText = questions.map((q, i) => {
+        let text = `Q${i + 1}: ${q.question}\n`;
+        if (q.options && q.options.length > 0) {
+          q.options.forEach((opt, idx) => {
+            const label = q.type === 'mcq' ? String.fromCharCode(65 + idx) : '';
+            text += `${label ? label + '. ' : ''}${opt}\n`;
+          });
+        }
+        text += `Answer: ${q.answer}`;
+        return text;
+      }).join('\n\n');
       navigator.clipboard.writeText(questionsText);
       toast({
         title: "تم النسخ!",
-        description: "تم نسخ الأسئلة إلى الحافظة.",
+        description: "تم نسخ الأسئلة والإجابات إلى الحافظة.",
       });
     }
   };
@@ -214,20 +254,99 @@ export default function QuestionGeneratorForm() {
       {questions.length > 0 && (
         <CardFooter className="flex-col items-start gap-4 pt-4 border-t">
             <div className='w-full'>
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center mb-4">
                     <h3 className="font-headline text-xl font-semibold">Generated Questions ({questions.length})</h3>
-                    <Button onClick={handleCopy} variant="outline" size="icon">
-                        <Copy className="h-4 w-4" />
-                        <span className="sr-only">Copy</span>
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button onClick={toggleAllAnswers} variant="outline" size="sm">
+                        {visibleAnswers.size === questions.length ? (
+                          <>
+                            <EyeOff className="h-4 w-4 mr-2" />
+                            Hide All Answers
+                          </>
+                        ) : (
+                          <>
+                            <Eye className="h-4 w-4 mr-2" />
+                            Show All Answers
+                          </>
+                        )}
+                      </Button>
+                      <Button onClick={handleCopy} variant="outline" size="sm">
+                        <Copy className="h-4 w-4 mr-2" />
+                        Copy All
+                      </Button>
+                    </div>
                 </div>
-                <div className="p-4 rounded-md bg-secondary/50 space-y-3">
+                <div className="space-y-4">
                   {questions.map((q, index) => (
-                    <div key={index} className="p-3 bg-background rounded-md border">
-                      <p className="font-medium">
-                        <span className="text-primary mr-2">Q{index + 1}:</span>
-                        {q}
-                      </p>
+                    <div key={index} className="p-4 bg-background rounded-lg border-2 hover:border-primary/50 transition-colors">
+                      <div className="flex justify-between items-start gap-4 mb-3">
+                        <p className="font-semibold text-lg flex-1">
+                          <span className="text-primary mr-2">Q{index + 1}.</span>
+                          {q.question}
+                        </p>
+                        <Button 
+                          onClick={() => toggleAnswer(index)} 
+                          variant={visibleAnswers.has(index) ? "default" : "outline"}
+                          size="sm"
+                          className="shrink-0"
+                        >
+                          {visibleAnswers.has(index) ? (
+                            <>
+                              <EyeOff className="h-4 w-4 mr-1" />
+                              Hide
+                            </>
+                          ) : (
+                            <>
+                              <Eye className="h-4 w-4 mr-1" />
+                              Show
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                      
+                      {q.options && q.options.length > 0 && (
+                        <div className={`mb-3 ${q.type === 'mcq' ? 'grid grid-cols-1 md:grid-cols-2 gap-2' : 'flex gap-3'}`}>
+                          {q.options.map((option, optIdx) => {
+                            const label = q.type === 'mcq' ? String.fromCharCode(65 + optIdx) : '';
+                            const isCorrect = visibleAnswers.has(index) && (
+                              (q.type === 'mcq' && q.answer === label) || 
+                              (q.type === 'true_false' && q.answer === option)
+                            );
+                            
+                            return (
+                              <div 
+                                key={optIdx} 
+                                className={`p-2 rounded-md border ${
+                                  isCorrect 
+                                    ? 'bg-green-50 border-green-500 dark:bg-green-950/30 dark:border-green-700' 
+                                    : 'bg-secondary/30'
+                                }`}
+                              >
+                                {label && <span className="font-bold mr-2">{label}.</span>}
+                                <span>{option}</span>
+                                {isCorrect && <span className="ml-2 text-green-600 dark:text-green-400 font-semibold">✓</span>}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                      
+                      {visibleAnswers.has(index) && (
+                        <div className="mt-3 p-3 bg-green-50 dark:bg-green-950/30 border-l-4 border-green-500 rounded">
+                          <p className="text-sm font-semibold text-green-800 dark:text-green-300 mb-1">Answer:</p>
+                          <p className="text-green-900 dark:text-green-100">
+                            {q.type === 'mcq' && q.options ? (
+                              <>
+                                <span className="font-bold">{q.answer}</span>
+                                {' - '}
+                                {q.options[q.answer.charCodeAt(0) - 65] || q.answer}
+                              </>
+                            ) : (
+                              q.answer
+                            )}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
