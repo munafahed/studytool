@@ -108,16 +108,10 @@ const tools = [
     icon: <CalendarClock className="h-6 w-6" />,
   },
   {
-    title: 'Lecture Transcription',
-    description: 'Upload an audio lecture and receive a full text transcript.',
-    href: '/dashboard/transcription',
+    title: 'Audio to Text Converter (Full Transcription + Summary)',
+    description: 'Convert audio files to complete text transcription or get a quick summary - Your choice!',
+    href: '/dashboard/audio-to-text',
     icon: <Mic2 className="h-6 w-6" />,
-  },
-  {
-    title: 'Audio Summarization',
-    description: 'Get a quick summary from any audio file you upload.',
-    href: '/dashboard/audio-summary',
-    icon: <FileUp className="h-6 w-6" />,
   },
   {
     title: 'Podcast Summarizer',
