@@ -11,7 +11,21 @@ StudyMune is a Next.js application that provides an all-in-one platform for acad
 - Language Tools
 - And more
 
-## Recent Changes (October 16, 2025)
+## Recent Changes
+
+### October 18, 2025
+- **Question Generator Interactive Answers**: Major UX enhancement for question generator
+  - Restructured AI flow to return questions with separate answers and options
+  - Added interactive Show/Hide answer buttons for each question
+  - Bulk Show All/Hide All Answers functionality
+  - Improved layout for MCQ questions - options displayed in responsive grid (2 columns on desktop)
+  - True/False questions now display options horizontally side-by-side
+  - Visual highlighting of correct answers with green accent when revealed
+  - Answer panel shows both letter and full option text for MCQ questions
+  - Enhanced copy-to-clipboard to include formatted questions, options, and answers
+- **PDF Reading Fix**: Fixed PDF.js worker configuration to use local module instead of external CDN for better reliability
+
+### October 16, 2025
 - **Vercel to Replit Migration**: Successfully migrated the project from Vercel to Replit
 - **Port Configuration**: Updated dev and start scripts to bind to 0.0.0.0:5000 (required for Replit)
 - **Environment Variables**: Configured Firebase and Google Genkit AI to use environment variables for secure configuration
