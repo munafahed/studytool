@@ -27,6 +27,12 @@ StudyMune is a Next.js application that provides an all-in-one platform for acad
   - Text files (.txt, .md) support
   - Enhanced error handling with user-friendly messages
   - Applied to Question Generator and AI Detector tools
+- **Password Reset Feature**: Added "Forgot Password" functionality
+  - Password reset link on login page
+  - Dedicated forgot-password page with email verification
+  - Firebase password reset email integration
+  - Clear error messages and success notifications
+  - Easy navigation back to login page
 
 ## Technology Stack
 - **Framework**: Next.js 15.3.3 with Turbopack
