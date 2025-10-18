@@ -14,6 +14,24 @@ StudyMune is a Next.js application that provides an all-in-one platform for acad
 ## Recent Changes
 
 ### October 18, 2025
+- **Advanced Citation Generator**: Complete overhaul with intelligent metadata extraction
+  - Automatic extraction of Schema.org JSON-LD structured data
+  - Support for Open Graph and Twitter Card metadata
+  - Advanced byline parsing for author detection
+  - HTML meta tag extraction (title, description, dates, publisher)
+  - Metadata quality scoring (High/Medium/Low)
+  - Interactive UI showing extracted data fields
+  - More accurate citations using real page metadata instead of just URL
+  - Collapsible metadata viewer for verification
+  - Support for multiple content types (Article, NewsArticle, ScholarlyArticle, BlogPosting)
+- **Audio to Text Converter**: Unified tool combining transcription and summarization
+  - Single interface for both full transcription and audio summarization
+  - User can choose between complete text or quick summary
+  - Arabic language UI with bilingual support
+  - Interactive radio buttons for output mode selection
+  - Supports all audio formats (MP3, WAV, M4A, OGG, WebM)
+  - Token usage calculator: 1 minute = 1,920 tokens
+  - Maximum audio length: 9.5 hours (1,094,400 tokens)
 - **Question Generator Interactive Answers**: Major UX enhancement for question generator
   - Restructured AI flow to return questions with separate answers and options
   - Added interactive Show/Hide answer buttons for each question
