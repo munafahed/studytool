@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth, useFirestore } from '../../firebase.tsx';
+import { useAuth, useFirestore } from '../../firebase';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -124,7 +124,12 @@ export default function LoginPage() {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                <Link href="/forgot-password" className="text-sm underline">
+                  Forgot password?
+                </Link>
+              </div>
               <Input
                 id="password"
                 type="password"
