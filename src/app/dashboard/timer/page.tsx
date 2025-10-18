@@ -20,7 +20,6 @@ type TimerMode = 'pomodoro' | 'shortBreak' | 'longBreak';
 interface Theme {
   id: string;
   name: string;
-  nameAr: string;
   icon: any;
   gradient: string;
   buttonColor: string;
@@ -28,128 +27,129 @@ interface Theme {
   accentColor: string;
   decorations: string;
   pattern: string;
+  isLight: boolean;
 }
 
 const themes: Theme[] = [
   {
     id: 'starlight',
     name: 'Starlight Goals',
-    nameAr: 'النجوم الساطعة',
     icon: Star,
     gradient: 'from-slate-900 via-purple-900 to-slate-900',
     buttonColor: 'bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400',
     textColor: 'text-yellow-100',
     accentColor: 'text-yellow-300',
     decorations: 'stars',
-    pattern: 'radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.2) 0%, transparent 50%)'
+    pattern: 'radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.2) 0%, transparent 50%)',
+    isLight: false
   },
   {
     id: 'pastel',
     name: 'Pastel Power',
-    nameAr: 'طاقة الباستيل',
     icon: Sparkles,
     gradient: 'from-pink-200 via-purple-200 to-blue-200',
     buttonColor: 'bg-gradient-to-r from-pink-400 to-purple-500 hover:from-pink-300 hover:to-purple-400',
     textColor: 'text-purple-900',
-    accentColor: 'text-pink-600',
+    accentColor: 'text-pink-700',
     decorations: 'bubbles',
-    pattern: 'radial-gradient(circle at 30% 30%, rgba(251, 207, 232, 0.5) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(196, 181, 253, 0.5) 0%, transparent 50%)'
+    pattern: 'radial-gradient(circle at 30% 30%, rgba(251, 207, 232, 0.5) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(196, 181, 253, 0.5) 0%, transparent 50%)',
+    isLight: true
   },
   {
     id: 'anime',
     name: 'Anime Style',
-    nameAr: 'تصميم الأنمي',
     icon: Sparkles,
     gradient: 'from-purple-400 via-pink-500 to-red-500',
     buttonColor: 'bg-gradient-to-r from-yellow-400 to-pink-500 hover:from-yellow-300 hover:to-pink-400',
     textColor: 'text-white',
     accentColor: 'text-yellow-300',
     decorations: 'anime',
-    pattern: 'linear-gradient(45deg, rgba(236, 72, 153, 0.3) 25%, transparent 25%), linear-gradient(-45deg, rgba(236, 72, 153, 0.3) 25%, transparent 25%)'
+    pattern: 'linear-gradient(45deg, rgba(236, 72, 153, 0.3) 25%, transparent 25%), linear-gradient(-45deg, rgba(236, 72, 153, 0.3) 25%, transparent 25%)',
+    isLight: false
   },
   {
     id: 'cherry',
     name: 'Cherry Blossom',
-    nameAr: 'زهر الكرز',
     icon: Cherry,
     gradient: 'from-pink-100 via-rose-200 to-purple-200',
     buttonColor: 'bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-400 hover:to-rose-500',
     textColor: 'text-pink-900',
-    accentColor: 'text-rose-600',
+    accentColor: 'text-rose-700',
     decorations: 'petals',
-    pattern: 'radial-gradient(circle at 40% 20%, rgba(251, 207, 232, 0.6) 0%, transparent 50%), radial-gradient(circle at 60% 80%, rgba(253, 164, 175, 0.4) 0%, transparent 50%)'
+    pattern: 'radial-gradient(circle at 40% 20%, rgba(251, 207, 232, 0.6) 0%, transparent 50%), radial-gradient(circle at 60% 80%, rgba(253, 164, 175, 0.4) 0%, transparent 50%)',
+    isLight: true
   },
   {
     id: 'space',
     name: 'Space Explorer',
-    nameAr: 'مغامرة الفضاء',
     icon: Rocket,
     gradient: 'from-indigo-900 via-purple-900 to-pink-900',
     buttonColor: 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400',
     textColor: 'text-cyan-100',
     accentColor: 'text-cyan-300',
     decorations: 'planets',
-    pattern: 'radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.4) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.3) 0%, transparent 50%)'
+    pattern: 'radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.4) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.3) 0%, transparent 50%)',
+    isLight: false
   },
   {
     id: 'sunny',
     name: 'Sunny Motivation',
-    nameAr: 'قوة الإيجابية',
     icon: Sun,
     gradient: 'from-yellow-300 via-orange-400 to-yellow-300',
     buttonColor: 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400',
     textColor: 'text-orange-900',
-    accentColor: 'text-orange-600',
+    accentColor: 'text-orange-800',
     decorations: 'rays',
-    pattern: 'radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.4) 0%, transparent 70%)'
+    pattern: 'radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.4) 0%, transparent 70%)',
+    isLight: true
   },
   {
     id: 'grid',
     name: 'Grid Paper',
-    nameAr: 'دفتر الملاحظات',
     icon: Grid,
     gradient: 'from-gray-100 via-slate-200 to-gray-100',
     buttonColor: 'bg-gradient-to-r from-slate-700 to-gray-800 hover:from-slate-600 hover:to-gray-700',
     textColor: 'text-gray-800',
-    accentColor: 'text-slate-600',
+    accentColor: 'text-slate-700',
     decorations: 'grid',
-    pattern: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)'
+    pattern: 'linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)',
+    isLight: true
   },
   {
     id: 'greenery',
     name: 'Minimal Greenery',
-    nameAr: 'نباتات الظل',
     icon: Leaf,
     gradient: 'from-emerald-50 via-green-100 to-emerald-50',
     buttonColor: 'bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-500 hover:to-emerald-600',
     textColor: 'text-green-900',
-    accentColor: 'text-green-600',
+    accentColor: 'text-green-700',
     decorations: 'leaves',
-    pattern: 'radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(5, 150, 105, 0.1) 0%, transparent 50%)'
+    pattern: 'radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(5, 150, 105, 0.1) 0%, transparent 50%)',
+    isLight: true
   },
   {
     id: 'retro',
     name: 'Retro Vibe',
-    nameAr: 'ألوان السبعينات',
     icon: Circle,
     gradient: 'from-orange-700 via-yellow-600 to-orange-700',
     buttonColor: 'bg-gradient-to-r from-yellow-600 to-orange-700 hover:from-yellow-500 hover:to-orange-600',
     textColor: 'text-orange-100',
     accentColor: 'text-yellow-300',
     decorations: 'geometric',
-    pattern: 'repeating-linear-gradient(45deg, rgba(180, 83, 9, 0.2) 0px, rgba(180, 83, 9, 0.2) 10px, transparent 10px, transparent 20px)'
+    pattern: 'repeating-linear-gradient(45deg, rgba(180, 83, 9, 0.2) 0px, rgba(180, 83, 9, 0.2) 10px, transparent 10px, transparent 20px)',
+    isLight: false
   },
   {
     id: 'books',
     name: 'Book Journey',
-    nameAr: 'رحلة الكتب',
     icon: Book,
     gradient: 'from-amber-100 via-yellow-50 to-amber-100',
     buttonColor: 'bg-gradient-to-r from-amber-700 to-yellow-800 hover:from-amber-600 hover:to-yellow-700',
     textColor: 'text-amber-900',
-    accentColor: 'text-amber-700',
+    accentColor: 'text-amber-800',
     decorations: 'books',
-    pattern: 'linear-gradient(90deg, rgba(217, 119, 6, 0.1) 1px, transparent 1px)'
+    pattern: 'linear-gradient(90deg, rgba(217, 119, 6, 0.1) 1px, transparent 1px)',
+    isLight: true
   }
 ];
 
@@ -167,12 +167,12 @@ export default function TimerPage() {
   const handleTimeUp = useCallback(() => {
     setIsActive(false);
     toast({
-        title: "⏰ انتهى الوقت!",
-        description: "عمل رائع! خذ استراحة مستحقة.",
+        title: "⏰ Time's Up!",
+        description: "Great work! Take a well-deserved break.",
     });
     if (Notification.permission === "granted") {
-        new Notification("⏰ انتهى الوقت!", {
-            body: "انتهت جلسة الدراسة. حان وقت الاستراحة!",
+        new Notification("⏰ Time's Up!", {
+            body: "Study session complete. Time for a break!",
         });
     }
   }, [toast]);
@@ -272,7 +272,7 @@ export default function TimerPage() {
           {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute rounded-full bg-white/20"
+              className="absolute rounded-full bg-purple-500/20"
               style={{
                 left: `${Math.random() * 100}%`,
                 bottom: '-10%',
@@ -300,7 +300,7 @@ export default function TimerPage() {
           {[...Array(30)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-3 h-3 bg-pink-300 rounded-full opacity-60"
+              className="absolute w-3 h-3 bg-pink-400 rounded-full opacity-60"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: '-5%',
@@ -381,7 +381,7 @@ export default function TimerPage() {
             {[...Array(12)].map((_, i) => (
               <div
                 key={i}
-                className="absolute top-1/2 left-1/2 w-1 h-full bg-gradient-to-b from-yellow-300/40 via-transparent to-transparent origin-top"
+                className="absolute top-1/2 left-1/2 w-1 h-full bg-gradient-to-b from-yellow-400/40 via-transparent to-transparent origin-top"
                 style={{
                   transform: `rotate(${i * 30}deg) translateX(-50%)`,
                 }}
@@ -584,6 +584,18 @@ export default function TimerPage() {
     return null;
   };
 
+  const circleStrokeColor = currentTheme.isLight 
+    ? 'rgba(0,0,0,0.15)' 
+    : 'rgba(255,255,255,0.2)';
+  
+  const circleProgressColor = currentTheme.isLight 
+    ? 'rgba(0,0,0,0.5)' 
+    : 'rgba(255,255,255,0.8)';
+
+  const timerBackgroundColor = currentTheme.isLight
+    ? 'bg-white/40'
+    : 'bg-white/10';
+
   return (
     <div className={cn("relative w-full transition-all duration-500", isFullScreen ? 'fixed inset-0 z-50' : 'min-h-screen')}>
       <div 
@@ -612,14 +624,14 @@ export default function TimerPage() {
             <PopoverContent className="w-96" align="end">
               <div className="grid gap-4">
                 <div className="space-y-2">
-                  <h4 className="font-bold text-lg">⚙️ إعدادات المؤقت</h4>
+                  <h4 className="font-bold text-lg">⚙️ Timer Settings</h4>
                   <p className="text-sm text-muted-foreground">
-                    اضبط أوقات الدراسة والاستراحة
+                    Adjust your study and break times
                   </p>
                 </div>
                 <div className="grid gap-3">
                   <div className="grid grid-cols-3 items-center gap-4">
-                    <Label htmlFor="pomodoro" className="text-right">دراسة</Label>
+                    <Label htmlFor="pomodoro" className="text-right">Study</Label>
                     <Input 
                       id="pomodoro" 
                       type="number" 
@@ -629,7 +641,7 @@ export default function TimerPage() {
                     />
                   </div>
                   <div className="grid grid-cols-3 items-center gap-4">
-                    <Label htmlFor="shortBreak" className="text-right">استراحة قصيرة</Label>
+                    <Label htmlFor="shortBreak" className="text-right">Short Break</Label>
                     <Input 
                       id="shortBreak" 
                       type="number" 
@@ -639,7 +651,7 @@ export default function TimerPage() {
                     />
                   </div>
                   <div className="grid grid-cols-3 items-center gap-4">
-                    <Label htmlFor="longBreak" className="text-right">استراحة طويلة</Label>
+                    <Label htmlFor="longBreak" className="text-right">Long Break</Label>
                     <Input 
                       id="longBreak" 
                       type="number" 
@@ -651,7 +663,7 @@ export default function TimerPage() {
                 </div>
                 
                 <div className="space-y-3 pt-4 border-t">
-                  <h4 className="font-bold">🎨 اختر الثيم</h4>
+                  <h4 className="font-bold">🎨 Choose Theme</h4>
                   <div className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto">
                     {themes.map((theme) => {
                       const Icon = theme.icon;
@@ -664,8 +676,7 @@ export default function TimerPage() {
                         >
                           <Icon className="h-4 w-4 mr-2 shrink-0" />
                           <div className="flex flex-col items-start text-xs">
-                            <span className="font-semibold">{theme.nameAr}</span>
-                            <span className="text-[10px] opacity-70">{theme.name}</span>
+                            <span className="font-semibold">{theme.name}</span>
                           </div>
                         </Button>
                       );
@@ -703,11 +714,8 @@ export default function TimerPage() {
 
             <div className="text-center space-y-2">
               <h1 className={cn("text-2xl md:text-3xl font-bold", currentTheme.textColor)}>
-                {currentTheme.nameAr}
-              </h1>
-              <p className={cn("text-sm md:text-base opacity-80", currentTheme.textColor)}>
                 {currentTheme.name}
-              </p>
+              </h1>
             </div>
 
             <div className="flex gap-3">
@@ -719,7 +727,7 @@ export default function TimerPage() {
                   mode === 'pomodoro' ? currentTheme.buttonColor + ' text-white' : 'bg-white/20 hover:bg-white/30 ' + currentTheme.textColor
                 )}
               >
-                🎯 دراسة
+                🎯 Study
               </Button>
               <Button
                 variant={mode === 'shortBreak' ? 'default' : 'ghost'}
@@ -729,7 +737,7 @@ export default function TimerPage() {
                   mode === 'shortBreak' ? currentTheme.buttonColor + ' text-white' : 'bg-white/20 hover:bg-white/30 ' + currentTheme.textColor
                 )}
               >
-                ☕ استراحة قصيرة
+                ☕ Short Break
               </Button>
               <Button
                 variant={mode === 'longBreak' ? 'default' : 'ghost'}
@@ -739,7 +747,7 @@ export default function TimerPage() {
                   mode === 'longBreak' ? currentTheme.buttonColor + ' text-white' : 'bg-white/20 hover:bg-white/30 ' + currentTheme.textColor
                 )}
               >
-                🌴 استراحة طويلة
+                🌴 Long Break
               </Button>
             </div>
 
@@ -755,7 +763,7 @@ export default function TimerPage() {
                     cy="50%"
                     r="45%"
                     fill="none"
-                    stroke="rgba(255,255,255,0.2)"
+                    stroke={circleStrokeColor}
                     strokeWidth="8"
                   />
                   <motion.circle
@@ -763,7 +771,7 @@ export default function TimerPage() {
                     cy="50%"
                     r="45%"
                     fill="none"
-                    stroke="rgba(255,255,255,0.8)"
+                    stroke={circleProgressColor}
                     strokeWidth="8"
                     strokeLinecap="round"
                     initial={{ pathLength: 0 }}
@@ -777,7 +785,7 @@ export default function TimerPage() {
                 </svg>
                 
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className={cn("text-center backdrop-blur-xl bg-white/10 rounded-full p-12", currentTheme.textColor)}>
+                  <div className={cn("text-center backdrop-blur-xl rounded-full p-12", timerBackgroundColor, currentTheme.textColor)}>
                     <motion.div
                       key={seconds}
                       initial={{ scale: 1.1, opacity: 0 }}
@@ -787,7 +795,7 @@ export default function TimerPage() {
                       {formatTime(seconds)}
                     </motion.div>
                     <div className="text-sm md:text-base mt-2 opacity-70">
-                      {mode === 'pomodoro' ? '⏱️ وقت الدراسة' : mode === 'shortBreak' ? '☕ استراحة قصيرة' : '🌴 استراحة طويلة'}
+                      {mode === 'pomodoro' ? '⏱️ Study Time' : mode === 'shortBreak' ? '☕ Short Break' : '🌴 Long Break'}
                     </div>
                   </div>
                 </div>
@@ -808,12 +816,12 @@ export default function TimerPage() {
                 {isActive ? (
                   <>
                     <Pause className="h-6 w-6 mr-2" />
-                    إيقاف مؤقت
+                    Pause
                   </>
                 ) : (
                   <>
                     <Play className="h-6 w-6 mr-2" />
-                    ابدأ
+                    Start
                   </>
                 )}
               </Button>
@@ -836,7 +844,7 @@ export default function TimerPage() {
               animate={{ opacity: 0.6 }}
               className={cn("text-center text-sm", currentTheme.textColor)}
             >
-              <p>💡 نصيحة: ركز لمدة {initialMinutes.pomodoro} دقيقة، ثم خذ استراحة!</p>
+              <p>💡 Tip: Focus for {initialMinutes.pomodoro} minutes, then take a break!</p>
             </motion.div>
           </div>
         </motion.div>
