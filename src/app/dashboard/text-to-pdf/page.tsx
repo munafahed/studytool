@@ -18,33 +18,70 @@ export default function TextToPdfPage() {
     if (!text.trim()) {
       toast({
         variant: 'destructive',
-        title: 'Error',
-        description: 'Please enter some text to convert to PDF.',
+        title: 'خطأ',
+        description: 'الرجاء إدخال نص لتحويله إلى PDF.',
       });
       return;
     }
 
     setIsLoading(true);
     try {
-      // We use a timeout to allow the UI to update to the loading state
       setTimeout(() => {
         const doc = new jsPDF();
         
-        // jsPDF doesn't handle wrapping long lines automatically with the default `text` method.
-        // We need to split the text into lines that fit the page width.
-        const page_width = doc.internal.pageSize.getWidth();
-        const margin = 15;
-        const max_line_width = page_width - margin * 2;
+        // Page dimensions and margins
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const margin = 20;
+        const maxLineWidth = pageWidth - (margin * 2);
         
-        // The splitTextToSize function is perfect for this.
-        const lines = doc.splitTextToSize(text, max_line_width);
+        // Font settings for better readability
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        const lineHeight = 7;
         
-        doc.text(lines, margin, margin);
+        // Split text into lines that fit the page width
+        const lines = doc.splitTextToSize(text, maxLineWidth);
+        
+        // Calculate how many lines fit on one page
+        const maxLinesPerPage = Math.floor((pageHeight - (margin * 2)) / lineHeight);
+        
+        let currentY = margin;
+        let currentPage = 1;
+        
+        // Add lines to PDF with automatic page breaks
+        lines.forEach((line: string, index: number) => {
+          // Check if we need a new page
+          if (index > 0 && index % maxLinesPerPage === 0) {
+            doc.addPage();
+            currentPage++;
+            currentY = margin;
+          }
+          
+          // Add the line to the current page
+          doc.text(line, margin, currentY);
+          currentY += lineHeight;
+        });
+        
+        // Add page numbers at the bottom
+        const totalPages = currentPage;
+        for (let i = 1; i <= totalPages; i++) {
+          doc.setPage(i);
+          doc.setFontSize(10);
+          doc.setTextColor(128, 128, 128);
+          doc.text(
+            `Page ${i} of ${totalPages}`,
+            pageWidth / 2,
+            pageHeight - 10,
+            { align: 'center' }
+          );
+        }
+        
         doc.save('document.pdf');
         
         toast({
-          title: 'Success!',
-          description: 'Your PDF has been downloaded.',
+          title: 'تم بنجاح! ✓',
+          description: `تم إنشاء PDF من ${totalPages} صفحة وتنزيله.`,
         });
         setIsLoading(false);
       }, 500);
@@ -52,8 +89,8 @@ export default function TextToPdfPage() {
       console.error('Failed to generate PDF:', error);
       toast({
         variant: 'destructive',
-        title: 'Uh oh!',
-        description: 'Something went wrong while generating the PDF.',
+        title: 'خطأ!',
+        description: 'حدث خطأ أثناء إنشاء ملف PDF.',
       });
       setIsLoading(false);
     }

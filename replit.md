@@ -24,6 +24,13 @@ StudyMune is a Next.js application that provides an all-in-one platform for acad
   - Answer panel shows both letter and full option text for MCQ questions
   - Enhanced copy-to-clipboard to include formatted questions, options, and answers
 - **PDF Reading Fix**: Fixed PDF.js worker configuration to use local module instead of external CDN for better reliability
+- **Text to PDF Enhancement**: Complete rewrite of PDF generation for full text support
+  - Automatic multi-page support - no text truncation
+  - Professional formatting with proper margins and line spacing
+  - Automatic page breaks when text exceeds page height
+  - Page numbers on every page (e.g., "Page 1 of 3")
+  - Improved readability with optimized font size and spacing
+  - Success notification shows total number of pages generated
 
 ### October 16, 2025
 - **Vercel to Replit Migration**: Successfully migrated the project from Vercel to Replit
