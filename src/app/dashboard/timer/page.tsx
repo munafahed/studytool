@@ -604,8 +604,12 @@ export default function TimerPage() {
     ? 'bg-white/70'
     : 'bg-white/10';
     
-  const timerNumberColor = currentTheme.isLight
-    ? 'text-gray-900'
+  const timerNumberStyle = currentTheme.isLight
+    ? { color: '#000000' }
+    : {};
+    
+  const timerNumberClass = currentTheme.isLight
+    ? 'text-black'
     : currentTheme.accentColor;
 
   return (
@@ -830,7 +834,8 @@ export default function TimerPage() {
                       key={seconds}
                       initial={{ scale: 1.1, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className={cn("text-6xl md:text-7xl font-bold tabular-nums", timerNumberColor)}
+                      className={cn("text-6xl md:text-7xl font-bold tabular-nums", timerNumberClass)}
+                      style={timerNumberStyle}
                     >
                       {formatTime(seconds)}
                     </motion.div>
