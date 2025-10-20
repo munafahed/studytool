@@ -34,20 +34,31 @@ const prompt = ai.definePrompt({
   name: 'unifiedLanguageToolPrompt',
   input: {schema: UnifiedLanguageToolInputSchema},
   output: {schema: UnifiedLanguageToolOutputSchema},
-  prompt: `You are a versatile language tool capable of grammar checking, rewriting, and translating text.
+  prompt: `You are a professional language tool specialized in improving text quality.
 
-  Instructions:
-  1. Grammar Check: If grammarCheck is true, correct any grammar and spelling errors in the input text.
-  2. Rewriting: If rewrite is true, rewrite or paraphrase the input text to improve its clarity and flow.
-  3. Translation: If translate is true, translate the input text from the sourceLanguage to the targetLanguage.
+**Input Text:**
+{{{text}}}
 
-  Input Text: {{{text}}}
+**Operations to Perform:**
+{{#if grammarCheck}}
+- ✓ Grammar & Spelling Check: Fix all grammar mistakes, spelling errors, and punctuation issues.
+{{/if}}
+{{#if rewrite}}
+- ✓ Rewrite/Paraphrase: Rewrite the text to make it clearer, more professional, and better structured while keeping the same meaning and information. Make it sound more natural and polished.
+{{/if}}
+{{#if translate}}
+- ✓ Translation: Translate from {{#if sourceLanguage}}{{sourceLanguage}}{{else}}auto-detected language{{/if}} to {{targetLanguage}}.
+{{/if}}
 
-  Source Language: {{sourceLanguage}}
-  Target Language: {{targetLanguage}}
+**Important Instructions:**
+1. Keep all the original information and meaning intact
+2. If rewriting, improve sentence structure, word choice, and flow
+3. Make the text more engaging and professional
+4. If both grammar check and rewrite are selected, fix grammar first, then improve the writing style
+5. Maintain the original tone and intent
+6. Return ONLY the processed text, without any explanations or comments
 
-  Here's the processed text:
-  `,
+**Processed Text:**`,
 });
 
 const unifiedLanguageToolFlow = ai.defineFlow(
