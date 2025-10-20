@@ -14,7 +14,7 @@ import { Checkbox } from '../ui/checkbox';
 
 export default function UnifiedLanguageToolForm() {
   const [text, setText] = useState('');
-  const [sourceLanguage, setSourceLanguage] = useState('');
+  const [sourceLanguage, setSourceLanguage] = useState('auto');
   const [targetLanguage, setTargetLanguage] = useState('English');
   const [operations, setOperations] = useState({
     grammarCheck: false,
@@ -48,7 +48,7 @@ export default function UnifiedLanguageToolForm() {
         ...operations,
       };
       if (operations.translate) {
-        input.sourceLanguage = sourceLanguage || undefined; // Auto-detect if not set
+        input.sourceLanguage = sourceLanguage === 'auto' ? undefined : sourceLanguage; // Auto-detect if "auto"
         input.targetLanguage = targetLanguage;
       }
 
@@ -131,7 +131,7 @@ export default function UnifiedLanguageToolForm() {
                             <SelectValue placeholder="Auto-detect" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="">Auto-detect</SelectItem>
+                            <SelectItem value="auto">Auto-detect</SelectItem>
                             {languages.map(lang => <SelectItem key={`src-${lang}`} value={lang}>{lang}</SelectItem>)}
                         </SelectContent>
                     </Select>
