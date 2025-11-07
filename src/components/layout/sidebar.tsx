@@ -35,6 +35,7 @@ const userNav = [
 
 const studyTools = [
   { href: "/dashboard/document-tools", label: "AI Study Tools", icon: BookOpen },
+  { href: "/dashboard/cover-page", label: "Cover Page Generator", icon: FileText },
   { href: "#ai-teachers", label: "24/7 AI Teachers", icon: MessageSquare },
   { href: "#project-generator", label: "Project Topic Generator", icon: FlaskConical },
   { href: "#ai-youtube", label: "AI YouTube", icon: Youtube },
