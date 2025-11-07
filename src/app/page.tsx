@@ -67,12 +67,6 @@ const tools = [
     icon: <Quote className="h-6 w-6" />,
   },
   {
-    title: 'Multi-language Summarization',
-    description: 'Summarize text from one language to another effortlessly.',
-    href: '/dashboard/multi-language-summary',
-    icon: <Languages className="h-6 w-6" />,
-  },
-  {
     title: 'Question Generation',
     description: 'Generate insightful questions from any text or document.',
     href: '/dashboard/question-generator',
