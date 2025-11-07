@@ -170,9 +170,9 @@ export default function Home() {
         <section className="relative h-[70vh] flex items-center justify-center text-center text-foreground bg-background">
             <InteractiveBackground />
             <div className="relative z-10 container">
-                <h1 className="text-5xl md:text-7xl font-headline font-bold text-foreground">Welcome to StudyMune</h1>
+                <h1 className="text-5xl md:text-7xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-primary to-purple-500 drop-shadow-2xl animate-gradient">Welcome to StudyMune</h1>
                 <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-foreground/80">Your all-in-one platform for academic excellence. Let's make learning smarter, not harder.</p>
-                <Button asChild size="lg" className="mt-8 rounded-full font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-lg transition-transform transform hover:scale-105">
+                <Button asChild size="lg" className="mt-8 rounded-full font-bold bg-gradient-to-r from-emerald-500 to-primary hover:from-emerald-600 hover:to-primary/90 text-white shadow-xl transition-all duration-300 transform hover:scale-110 hover:shadow-2xl">
                     <Link href="#tools">
                         Get Started <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
