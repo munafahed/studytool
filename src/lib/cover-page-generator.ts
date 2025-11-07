@@ -1,9 +1,14 @@
-import { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel, ImageRun, convertInchesToTwip } from 'docx';
+import { Document, Packer, Paragraph, TextRun, AlignmentType, ImageRun, Table, TableRow, TableCell, WidthType, BorderStyle } from 'docx';
 import { saveAs } from 'file-saver';
 
+interface Student {
+  name: string;
+  id: string;
+}
+
 interface CoverPageData {
-  studentName: string;
-  studentId: string;
+  projectType: 'individual' | 'group';
+  students: Student[];
   college: string;
   major: string;
   courseName: string;
@@ -13,8 +18,32 @@ interface CoverPageData {
   logo: File | null;
 }
 
-export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl: string | null) {
-  const children: Paragraph[] = [];
+export async function generateCoverPageDocument(
+  data: CoverPageData, 
+  logoDataUrl: string | null,
+  language: 'ar' | 'en' = 'ar'
+) {
+  const children: (Paragraph | Table)[] = [];
+
+  const labels = language === 'ar' ? {
+    course: 'المادة',
+    submittedTo: 'مقدم إلى',
+    preparedBy: 'إعداد الطالب',
+    preparedByGroup: 'إعداد الطلاب',
+    studentName: 'اسم الطالب',
+    studentId: 'الرقم الجامعي',
+    submissionDate: 'تاريخ التسليم',
+    dr: 'د. ',
+  } : {
+    course: 'Course',
+    submittedTo: 'Submitted to',
+    preparedBy: 'Prepared by',
+    preparedByGroup: 'Prepared by',
+    studentName: 'Student Name',
+    studentId: 'Student ID',
+    submissionDate: 'Submission Date',
+    dr: 'Dr. ',
+  };
 
   if (logoDataUrl) {
     try {
@@ -26,13 +55,13 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
       children.push(
         new Paragraph({
           alignment: AlignmentType.CENTER,
-          spacing: { after: 400 },
+          spacing: { after: 600 },
           children: [
             new ImageRun({
               data: imageBuffer,
               transformation: {
-                width: 120,
-                height: 120,
+                width: 200,
+                height: 200,
               },
               type: imageType === 'jpeg' ? 'jpg' : imageType,
             } as any),
@@ -55,10 +84,15 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
   if (data.college) {
     children.push(
       new Paragraph({
-        text: data.college,
-        heading: HeadingLevel.HEADING_1,
         alignment: AlignmentType.CENTER,
-        spacing: { after: 200 },
+        spacing: { after: 300 },
+        children: [
+          new TextRun({
+            text: data.college,
+            size: 56,
+            bold: true,
+          }),
+        ],
       })
     );
   }
@@ -67,11 +101,11 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
     children.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { after: 400 },
+        spacing: { after: 500 },
         children: [
           new TextRun({
             text: data.major,
-            size: 28,
+            size: 40,
             bold: false,
           }),
         ],
@@ -87,7 +121,7 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
         bottom: {
           color: "000000",
           space: 1,
-          style: "single",
+          style: BorderStyle.SINGLE,
           size: 6,
         },
       },
@@ -99,11 +133,11 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
     children.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { after: 300 },
+        spacing: { after: 400 },
         children: [
           new TextRun({
-            text: `المادة: ${data.courseName}`,
-            size: 32,
+            text: `${labels.course}: ${data.courseName}`,
+            size: 44,
             bold: true,
           }),
         ],
@@ -115,11 +149,11 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
     children.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { after: 600, before: 400 },
+        spacing: { after: 800, before: 500 },
         children: [
           new TextRun({
             text: data.topicName,
-            size: 40,
+            size: 56,
             bold: true,
           }),
         ],
@@ -130,7 +164,7 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
   children.push(
     new Paragraph({
       alignment: AlignmentType.CENTER,
-      spacing: { after: 200, before: 800 },
+      spacing: { after: 300, before: 1000 },
       children: [],
     })
   );
@@ -139,49 +173,163 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
     children.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { after: 200 },
+        spacing: { after: 300 },
         children: [
           new TextRun({
-            text: `إشراف: د. ${data.professorName}`,
-            size: 28,
+            text: `${labels.submittedTo}: ${labels.dr}${data.professorName}`,
+            size: 36,
+            bold: true,
           }),
         ],
       })
     );
   }
 
-  if (data.studentName) {
-    children.push(
-      new Paragraph({
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 200 },
-        children: [
-          new TextRun({
-            text: `إعداد الطالب: ${data.studentName}`,
-            size: 28,
-          }),
-        ],
-      })
-    );
-  }
+  if (data.projectType === 'individual') {
+    const student = data.students[0];
+    if (student?.name) {
+      children.push(
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 250 },
+          children: [
+            new TextRun({
+              text: `${labels.preparedBy}: ${student.name}`,
+              size: 36,
+            }),
+          ],
+        })
+      );
+    }
 
-  if (data.studentId) {
+    if (student?.id) {
+      children.push(
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 300 },
+          children: [
+            new TextRun({
+              text: `${labels.studentId}: ${student.id}`,
+              size: 32,
+            }),
+          ],
+        })
+      );
+    }
+  } else {
     children.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
         spacing: { after: 200 },
         children: [
           new TextRun({
-            text: `الرقم الجامعي: ${data.studentId}`,
-            size: 24,
+            text: `${labels.preparedByGroup}:`,
+            size: 36,
+            bold: true,
           }),
         ],
       })
     );
+
+    const validStudents = data.students.filter(s => s.name.trim());
+    
+    if (validStudents.length > 0) {
+      const table = new Table({
+        alignment: AlignmentType.CENTER,
+        width: {
+          size: 70,
+          type: WidthType.PERCENTAGE,
+        },
+        rows: [
+          new TableRow({
+            children: [
+              new TableCell({
+                width: {
+                  size: 50,
+                  type: WidthType.PERCENTAGE,
+                },
+                children: [
+                  new Paragraph({
+                    alignment: AlignmentType.CENTER,
+                    children: [
+                      new TextRun({
+                        text: labels.studentName,
+                        size: 32,
+                        bold: true,
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+              new TableCell({
+                width: {
+                  size: 50,
+                  type: WidthType.PERCENTAGE,
+                },
+                children: [
+                  new Paragraph({
+                    alignment: AlignmentType.CENTER,
+                    children: [
+                      new TextRun({
+                        text: labels.studentId,
+                        size: 32,
+                        bold: true,
+                      }),
+                    ],
+                  }),
+                ],
+              }),
+            ],
+          }),
+          ...validStudents.map(student => 
+            new TableRow({
+              children: [
+                new TableCell({
+                  children: [
+                    new Paragraph({
+                      alignment: AlignmentType.CENTER,
+                      children: [
+                        new TextRun({
+                          text: student.name,
+                          size: 28,
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+                new TableCell({
+                  children: [
+                    new Paragraph({
+                      alignment: AlignmentType.CENTER,
+                      children: [
+                        new TextRun({
+                          text: student.id || '',
+                          size: 28,
+                        }),
+                      ],
+                    }),
+                  ],
+                }),
+              ],
+            })
+          ),
+        ],
+      });
+
+      children.push(table);
+      
+      children.push(
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 300, before: 300 },
+          children: [],
+        })
+      );
+    }
   }
 
   if (data.submissionDate) {
-    const formattedDate = new Date(data.submissionDate).toLocaleDateString('ar-SA', {
+    const formattedDate = new Date(data.submissionDate).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -189,11 +337,11 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
     children.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { after: 200 },
+        spacing: { after: 300 },
         children: [
           new TextRun({
-            text: `تاريخ التسليم: ${formattedDate}`,
-            size: 24,
+            text: `${labels.submissionDate}: ${formattedDate}`,
+            size: 32,
           }),
         ],
       })
@@ -206,10 +354,10 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
         properties: {
           page: {
             margin: {
-              top: convertInchesToTwip(1),
-              right: convertInchesToTwip(1),
-              bottom: convertInchesToTwip(1),
-              left: convertInchesToTwip(1),
+              top: 1440,
+              right: 1440,
+              bottom: 1440,
+              left: 1440,
             },
           },
         },
@@ -219,6 +367,6 @@ export async function generateCoverPageDocument(data: CoverPageData, logoDataUrl
   });
 
   const blob = await Packer.toBlob(doc);
-  const fileName = `صفحة_غلاف_${data.topicName || 'بحث'}.docx`;
+  const fileName = `${language === 'ar' ? 'صفحة_غلاف' : 'Cover_Page'}_${data.topicName.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_') || (language === 'ar' ? 'بحث' : 'Research')}.docx`;
   saveAs(blob, fileName);
 }
