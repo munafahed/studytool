@@ -26,6 +26,7 @@ import {
   Zap,
   ScanSearch,
   Wand2,
+  FileSpreadsheet,
 } from 'lucide-react';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
@@ -46,6 +47,12 @@ const tools = [
     description: 'Convert your text into a downloadable PDF document instantly.',
     href: '/dashboard/text-to-pdf',
     icon: <FileJson2 className="h-6 w-6" />,
+  },
+  {
+    title: 'Cover Page Generator',
+    description: 'Create professional academic cover pages with logo upload and download as Word document.',
+    href: '/dashboard/cover-page',
+    icon: <FileSpreadsheet className="h-6 w-6" />,
   },
   {
     title: 'Essay / Report Generator',
