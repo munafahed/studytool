@@ -5,6 +5,7 @@ StudyMune is a Next.js application that provides an all-in-one platform for acad
 - AI Detector
 - Audio Summary
 - Citation Generator
+- Cover Page Generator
 - Essay Generator
 - Flashcard Generator
 - GPA Calculator
@@ -12,6 +13,18 @@ StudyMune is a Next.js application that provides an all-in-one platform for acad
 - And more
 
 ## Recent Changes
+
+### November 07, 2025
+- **Cover Page Generator**: New tool for creating professional academic cover pages
+  - Customizable form fields: student name, university ID, college, major, course name, topic, professor name, submission date
+  - Logo upload support (PNG, JPEG) with automatic type detection
+  - Live preview showing exactly how the cover page will look
+  - Professional layout with proper hierarchy: logo → college → major → course → topic → professor → student info → date
+  - Download as Microsoft Word document (.docx) with proper formatting
+  - Arabic language interface with right-to-left text support
+  - Responsive design with side-by-side form and preview on desktop
+  - Uses docx library for high-quality Word document generation
+  - Added to Study Tools section in navigation menu
 
 ### October 18, 2025
 - **Advanced Citation Generator**: Complete overhaul with intelligent metadata extraction
