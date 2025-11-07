@@ -170,7 +170,7 @@ export default function Home() {
         <section className="relative h-[70vh] flex items-center justify-center text-center text-foreground bg-background">
             <InteractiveBackground />
             <div className="relative z-10 container">
-                <h1 className="text-5xl md:text-7xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-white drop-shadow-lg">Welcome to StudyMune</h1>
+                <h1 className="text-5xl md:text-7xl font-headline font-bold text-foreground">Welcome to StudyMune</h1>
                 <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-foreground/80">Your all-in-one platform for academic excellence. Let's make learning smarter, not harder.</p>
                 <Button asChild size="lg" className="mt-8 rounded-full font-bold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white shadow-lg transition-transform transform hover:scale-105">
                     <Link href="#tools">
