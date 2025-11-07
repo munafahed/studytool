@@ -53,24 +53,39 @@ Template Style: {{{template}}}
 
 {{#if depth}}
 Depth Level: {{{depth}}}
-- shallow: 2-3 levels (central topic + main branches + few sub-branches)
-- medium: 3-4 levels (more detailed exploration)
+- shallow: EXACTLY 2 levels only (central topic + 4-6 main branches, NO sub-branches). FAST mode.
+- medium: 3 levels (central topic + main branches + sub-branches)
 - deep: 4-5 levels (comprehensive, detailed mind map)
 {{else}}
-Default to medium depth (3-4 levels).
+Default to medium depth (3 levels).
 {{/if}}
 
 IMPORTANT GUIDELINES:
+{{#if depth}}
+{{#eq depth "shallow"}}
+QUICK MODE - Keep it simple and fast:
+1. Root node = main topic
+2. Add ONLY 4-6 main branches (NO deeper levels)
+3. Use simple, clear titles (no descriptions needed)
+4. Assign colors to main branches: #3B82F6, #10B981, #F59E0B, #EF4444, #8B5CF6, #EC4899
+5. Keep it concise and focused on key concepts only
+{{else}}
 1. Create a comprehensive, well-organized hierarchical structure
 2. The root node should be the main topic
 3. Add 4-7 main branches (first level children) that cover the key aspects
 4. Each main branch should have 2-5 sub-branches with relevant details
 5. For deeper levels, add specific examples, characteristics, or components
 6. Add brief descriptions to clarify complex concepts (optional)
-7. Suggest colors for main branches to make the mind map visually appealing:
-   - Use distinct colors like #3B82F6 (blue), #10B981 (green), #F59E0B (amber), #EF4444 (red), #8B5CF6 (purple), #EC4899 (pink)
-8. Make sure the structure is balanced - avoid one branch being much larger than others
+7. Suggest colors for main branches: #3B82F6 (blue), #10B981 (green), #F59E0B (amber), #EF4444 (red), #8B5CF6 (purple), #EC4899 (pink)
+8. Make sure the structure is balanced
 9. Focus on clarity and logical organization
+{{/eq}}
+{{else}}
+1. Create a well-organized hierarchical structure
+2. Add 4-7 main branches with sub-branches
+3. Use distinct colors for visual appeal
+4. Focus on clarity and balance
+{{/if}}
 
 Generate a detailed, well-structured mind map that would be visually appealing and informative.`,
 });

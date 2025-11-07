@@ -46,9 +46,9 @@ const templates = [
 ];
 
 const depths = [
-  { value: 'shallow', label: 'Shallow (2-3 levels)', description: 'Quick overview with main concepts' },
-  { value: 'medium', label: 'Medium (3-4 levels)', description: 'Balanced detail and breadth' },
-  { value: 'deep', label: 'Deep (4-5 levels)', description: 'Comprehensive and detailed' },
+  { value: 'shallow', label: '⚡ Quick (2 levels)', description: 'Fast generation - main branches only' },
+  { value: 'medium', label: '📊 Balanced (3 levels)', description: 'Good detail in ~5-10 seconds' },
+  { value: 'deep', label: '🔍 Detailed (4+ levels)', description: 'Comprehensive - takes 10-15 seconds' },
 ];
 
 export default function MindMapGeneratorForm() {
