@@ -39,44 +39,50 @@ const prompt = ai.definePrompt({
   name: 'generateMindMapPrompt',
   input: {schema: GenerateMindMapInputSchema},
   output: {schema: GenerateMindMapOutputSchema},
-  prompt: `You are an expert in creating well-structured, comprehensive mind maps for educational and organizational purposes.
+  prompt: `You are an expert in creating well-structured mind maps. Generate a hierarchical JSON structure.
 
 Topic: {{{topic}}}
 
-{{#if template}}
-Template Style: {{{template}}}
-- hierarchical: Top-down structure, perfect for processes and classifications
-- radial: Central topic with radiating branches, perfect for brainstorming
-- organizational: Organization chart style, perfect for structures and hierarchies  
-- flowchart: Sequential flow, perfect for processes and workflows
-{{/if}}
+STRUCTURE REQUIREMENTS:
+- Root node with "title" containing the main topic "{{{topic}}}"
+- "children" array with 4-7 main branches
+- Each main branch has:
+  * "title": clear, concise label (2-5 words)
+  * "color": one of #3B82F6, #10B981, #F59E0B, #EF4444, #8B5CF6, #EC4899
+  * "children": array of sub-topics (for medium/deep depth)
 
-{{#if depth}}
-Depth Level: {{{depth}}}
-- shallow: EXACTLY 2 levels only (central topic + 4-6 main branches, NO sub-branches). FAST mode.
-- medium: 3 levels (central topic + main branches + sub-branches)
-- deep: 4-5 levels (comprehensive, detailed mind map)
-{{else}}
-Default to medium depth (3 levels).
-{{/if}}
+DEPTH: {{#if depth}}{{{depth}}}{{else}}medium{{/if}}
+- shallow: 2 levels only (4-6 main branches, NO children on them)
+- medium: 3 levels (4-7 main branches, each with 2-5 children)
+- deep: 4-5 levels (4-7 main branches, each with 3-6 children, some children have sub-children)
 
-IMPORTANT GUIDELINES:
-1. Create a well-organized hierarchical structure
-2. The root node should be the main topic
-3. Suggest colors for main branches: #3B82F6 (blue), #10B981 (green), #F59E0B (amber), #EF4444 (red), #8B5CF6 (purple), #EC4899 (pink)
-4. Make sure the structure is balanced and visually appealing
-5. Focus on clarity and logical organization
+EXAMPLE OUTPUT STRUCTURE:
+{
+  "mindMap": {
+    "title": "Main Topic",
+    "color": "#3B82F6",
+    "children": [
+      {
+        "title": "First Main Branch",
+        "color": "#10B981",
+        "children": [
+          {"title": "Sub-topic 1"},
+          {"title": "Sub-topic 2"}
+        ]
+      },
+      {
+        "title": "Second Main Branch",
+        "color": "#F59E0B",
+        "children": [
+          {"title": "Sub-topic A"},
+          {"title": "Sub-topic B"}
+        ]
+      }
+    ]
+  }
+}
 
-{{#if depth}}
-Based on depth level "{{{depth}}}":
-- If shallow: Add ONLY 4-6 main branches with NO sub-branches. Keep titles simple and clear. FAST mode.
-- If medium: Add 4-7 main branches, each with 2-5 sub-branches. Good balance of detail.
-- If deep: Create 4-5 levels with comprehensive details, examples, and characteristics.
-{{else}}
-Default: Create a medium-depth mind map with 4-7 main branches and appropriate sub-branches.
-{{/if}}
-
-Generate a detailed, well-structured mind map that would be visually appealing and informative.`,
+Create a well-organized, balanced mind map with clear, concise titles.`,
 });
 
 const generateMindMapFlow = ai.defineFlow(
