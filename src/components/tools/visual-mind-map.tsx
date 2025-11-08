@@ -13,7 +13,7 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { Button } from '@/components/ui/button';
-import { Download, FileJson, FileImage } from 'lucide-react';
+import { Download, FileJson, FileImage, Image } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -73,10 +73,14 @@ export default function VisualMindMap({ data, template }: VisualMindMapProps) {
       type: level === 0 ? 'input' : 'default',
       data: { 
         label: (
-          <div className="text-center">
-            <div className="font-semibold">{node.title}</div>
+          <div className="text-center px-2">
+            <div className={`font-bold ${level === 0 ? 'text-lg' : 'text-base'}`} style={{ lineHeight: '1.4' }}>
+              {node.title}
+            </div>
             {node.description && (
-              <div className="text-xs text-muted-foreground mt-1">{node.description}</div>
+              <div className="text-sm mt-1 opacity-90" style={{ lineHeight: '1.3' }}>
+                {node.description}
+              </div>
             )}
           </div>
         )
@@ -85,10 +89,13 @@ export default function VisualMindMap({ data, template }: VisualMindMapProps) {
       style: {
         background: node.color || (level === 0 ? '#3B82F6' : '#fff'),
         color: level === 0 || node.color ? '#fff' : '#000',
-        border: `2px solid ${node.color || '#3B82F6'}`,
-        borderRadius: '8px',
-        padding: '10px',
-        minWidth: '150px',
+        border: `3px solid ${node.color || '#3B82F6'}`,
+        borderRadius: '12px',
+        padding: '14px 18px',
+        minWidth: '180px',
+        fontSize: '15px',
+        fontWeight: level === 0 ? '700' : '600',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
       },
     });
 
@@ -100,10 +107,16 @@ export default function VisualMindMap({ data, template }: VisualMindMapProps) {
         target: nodeId,
         type: 'smoothstep',
         animated: level <= 1,
-        style: { stroke: node.color || '#3B82F6', strokeWidth: 2 },
+        style: { 
+          stroke: node.color || '#3B82F6', 
+          strokeWidth: 3,
+          strokeOpacity: 0.8
+        },
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: node.color || '#3B82F6',
+          width: 25,
+          height: 25,
         },
       });
     }
@@ -145,42 +158,61 @@ export default function VisualMindMap({ data, template }: VisualMindMapProps) {
 
   const downloadAsPNG = async () => {
     if (reactFlowWrapper.current) {
-      const canvas = await html2canvas(reactFlowWrapper.current);
+      const canvas = await html2canvas(reactFlowWrapper.current, {
+        scale: 3,
+        backgroundColor: '#ffffff',
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
+      });
       const link = document.createElement('a');
-      link.download = 'mind-map.png';
-      link.href = canvas.toDataURL();
+      link.download = 'mind-map-hd.png';
+      link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
     }
   };
 
   const downloadAsPDF = async () => {
     if (reactFlowWrapper.current) {
-      const canvas = await html2canvas(reactFlowWrapper.current);
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
+      const canvas = await html2canvas(reactFlowWrapper.current, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
       });
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      pdf.save('mind-map.pdf');
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const pdfWidth = imgWidth / 2;
+      const pdfHeight = imgHeight / 2;
+      
+      const pdf = new jsPDF({
+        orientation: imgWidth > imgHeight ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [pdfWidth, pdfHeight]
+      });
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+      pdf.save('mind-map-hd.pdf');
     }
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-2 justify-end">
+      <div className="flex gap-2 justify-end flex-wrap">
         <Button onClick={downloadAsJSON} variant="outline" size="sm">
           <FileJson className="h-4 w-4 mr-2" />
           JSON
         </Button>
-        <Button onClick={downloadAsPNG} variant="outline" size="sm">
-          <FileImage className="h-4 w-4 mr-2" />
-          PNG
+        <Button onClick={downloadAsPNG} variant="default" size="sm">
+          <Image className="h-4 w-4 mr-2" />
+          PNG HD
         </Button>
-        <Button onClick={downloadAsPDF} variant="outline" size="sm">
+        <Button onClick={downloadAsPDF} variant="default" size="sm">
           <Download className="h-4 w-4 mr-2" />
-          PDF
+          PDF HD
         </Button>
       </div>
       
