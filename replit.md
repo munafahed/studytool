@@ -14,6 +14,17 @@ StudyMune is a Next.js application that provides an all-in-one platform for acad
 
 ## Recent Changes
 
+### November 08, 2025
+- **Mind Map Generator Enhanced Quality**: Major improvements to visualization and export quality
+  - Fixed AI prompt template to generate proper structured mind maps with multiple nodes
+  - Enhanced export quality: PNG exports at 3x resolution, PDF at 2x resolution for HD clarity
+  - Improved visual design: larger fonts (15px base, 18px for root), bold text, better padding (14px-18px)
+  - Stronger visual elements: 3px borders, box shadows, thicker connection lines (3px)
+  - Larger arrow markers (25x25) for better visibility
+  - Export buttons now labeled "PNG HD" and "PDF HD" to indicate high quality
+  - White background enforced in exports for clean professional look
+  - All exports maintain maximum image quality (quality: 1.0)
+
 ### November 07, 2025
 - **Cover Page Generator**: New tool for creating professional academic cover pages
   - Customizable form fields: student name, university ID, college, major, course name, topic, professor name, submission date
