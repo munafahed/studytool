@@ -39,50 +39,15 @@ const prompt = ai.definePrompt({
   name: 'generateMindMapPrompt',
   input: {schema: GenerateMindMapInputSchema},
   output: {schema: GenerateMindMapOutputSchema},
-  prompt: `You are an expert in creating well-structured mind maps. Generate a hierarchical JSON structure.
+  prompt: `Create a mind map for: {{{topic}}}
 
-Topic: {{{topic}}}
+Return ONLY JSON in this exact structure:
+- Root: title = main topic
+- children = array of 4-6 main branches
+- Each branch: title (short), color (#3B82F6, #10B981, #F59E0B, #EF4444, #8B5CF6, #EC4899)
+- Each branch.children = array of 2-4 sub-topics (with title only)
 
-STRUCTURE REQUIREMENTS:
-- Root node with "title" containing the main topic "{{{topic}}}"
-- "children" array with 4-7 main branches
-- Each main branch has:
-  * "title": clear, concise label (2-5 words)
-  * "color": one of #3B82F6, #10B981, #F59E0B, #EF4444, #8B5CF6, #EC4899
-  * "children": array of sub-topics (for medium/deep depth)
-
-DEPTH: {{#if depth}}{{{depth}}}{{else}}medium{{/if}}
-- shallow: 2 levels only (4-6 main branches, NO children on them)
-- medium: 3 levels (4-7 main branches, each with 2-5 children)
-- deep: 4-5 levels (4-7 main branches, each with 3-6 children, some children have sub-children)
-
-EXAMPLE OUTPUT STRUCTURE:
-{
-  "mindMap": {
-    "title": "Main Topic",
-    "color": "#3B82F6",
-    "children": [
-      {
-        "title": "First Main Branch",
-        "color": "#10B981",
-        "children": [
-          {"title": "Sub-topic 1"},
-          {"title": "Sub-topic 2"}
-        ]
-      },
-      {
-        "title": "Second Main Branch",
-        "color": "#F59E0B",
-        "children": [
-          {"title": "Sub-topic A"},
-          {"title": "Sub-topic B"}
-        ]
-      }
-    ]
-  }
-}
-
-Create a well-organized, balanced mind map with clear, concise titles.`,
+Keep titles SHORT (2-5 words max). No descriptions, no long text.`,
 });
 
 const generateMindMapFlow = ai.defineFlow(
